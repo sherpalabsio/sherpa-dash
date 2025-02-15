@@ -1,11 +1,14 @@
 defmodule SherpaDash.Hibob.Client do
   use Tesla
 
+  @employee_id System.get_env("HIBOB_EMPLOYEE_ID")
+  @hibob_token System.get_env("HIBOB_TOKEN")
+
   plug Tesla.Middleware.BaseUrl, "https://api.hibob.com/v1"
 
   plug Tesla.Middleware.Headers, [
     {"accept", "application/json"},
-    {"Authorization", "" <> System.get_env("HIBOB_TOKEN")}
+    {"Authorization", "" <> @hibob_token}
   ]
 
   plug Tesla.Middleware.JSON
@@ -27,7 +30,7 @@ defmodule SherpaDash.Hibob.Client do
 
     response_body["outs"]
     |> Enum.filter(fn out ->
-      out["employeeId"] == System.get_env("HIBOB_EMPLOYEE_ID") &&
+      out["employeeId"] == @employee_id &&
         out["policyTypeDisplayName"] == "Absence"
     end)
     |> Enum.reduce(0, fn out, acc ->
@@ -40,12 +43,8 @@ defmodule SherpaDash.Hibob.Client do
     {:ok, end_date} = Date.from_iso8601(end_date)
 
     Date.range(start_date, end_date)
-    |> Enum.reduce(0, fn date, acc ->
-      if Date.day_of_week(date) in [6, 7] do
-        acc
-      else
-        acc + 1
-      end
+    |> Enum.count(fn date ->
+      Date.day_of_week(date) in 1..5
     end)
   end
 end
