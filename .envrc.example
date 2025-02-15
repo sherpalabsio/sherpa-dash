@@ -1,4 +1,4 @@
-export COMPOSE_PROJECT_NAME="sherpa-dash"
+export COMPOSE_PROJECT_NAME="sherpa-dash" # keep
 
 alias td="docker_compose_up && iex -S mix test --trace"
 
