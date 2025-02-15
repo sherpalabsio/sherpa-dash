@@ -1,8 +1,8 @@
 defmodule SherpaDash.Hibob.Client do
   use Tesla
 
-  @employee_id System.get_env("HIBOB_EMPLOYEE_ID")
   @hibob_token System.get_env("HIBOB_TOKEN")
+  @employee_id System.get_env("HIBOB_EMPLOYEE_ID")
 
   plug Tesla.Middleware.BaseUrl, "https://api.hibob.com/v1"
 
@@ -13,8 +13,12 @@ defmodule SherpaDash.Hibob.Client do
 
   plug Tesla.Middleware.JSON
 
-  def get_time_off() do
-    year = DateTime.utc_now().year
+  def number_of_taken_days do
+    current_year = DateTime.utc_now().year
+    number_of_taken_days(current_year)
+  end
+
+  def number_of_taken_days(year) do
     start_date = "#{year}-01-01"
     end_date = "#{year}-12-31"
 
@@ -26,9 +30,7 @@ defmodule SherpaDash.Hibob.Client do
         ]
       )
 
-    response_body = response.body
-
-    response_body["outs"]
+    response.body["outs"]
     |> Enum.filter(fn out ->
       out["employeeId"] == @employee_id &&
         out["policyTypeDisplayName"] == "Absence"
