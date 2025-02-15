@@ -2,8 +2,8 @@ import Config
 
 # Configure your database
 config :sherpa_dash, SherpaDash.Repo,
-  username: "postgres",
-  password: "postgres",
+  username: "no_crypto_mining_user",
+  password: "no_crypto_mining_password",
   hostname: "localhost",
   database: "sherpa_dash_dev",
   stacktrace: true,
