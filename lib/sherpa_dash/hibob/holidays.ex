@@ -1,5 +1,5 @@
 defmodule SherpaDash.Hibob.Holidays do
-  def min_max_days(year) do
+  def min_max_days_total(year) do
     first_day_of_the_year = Date.new!(year, 1, 1)
     last_day_of_the_year = Date.new!(year, 12, 31)
 
@@ -12,5 +12,13 @@ defmodule SherpaDash.Hibob.Holidays do
     max_days_i_work = String.to_integer(System.get_env("MAX_DAYS_I_WORK"))
 
     [number_of_working_days - max_days_i_work, number_of_working_days - min_days_i_work]
+  end
+
+  def min_max_days_remaining(year) do
+    [min_total, max_total] = min_max_days_total(year)
+
+    days_taken = SherpaDash.Hibob.Client.number_of_taken_days(year)
+
+    [min_total - days_taken, max_total - days_taken]
   end
 end

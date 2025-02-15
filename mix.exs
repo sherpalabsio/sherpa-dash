@@ -57,7 +57,8 @@ defmodule SherpaDash.MixProject do
       {:jason, "~> 1.2"},
       {:dns_cluster, "~> 0.1.1"},
       {:bandit, "~> 1.5"},
-      {:tesla, "~> 1.11"}
+      {:tesla, "~> 1.11"},
+      {:mock, "~> 0.3.0", only: :test}
     ]
   end
 
