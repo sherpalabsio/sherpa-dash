@@ -4,3 +4,6 @@ alias td="docker_compose_up && iex -S mix test --trace"
 
 export HIBOB_TOKEN=
 export HIBOB_EMPLOYEE_ID=
+
+export MIN_DAYS_I_WORK=
+export MAX_DAYS_I_WORK=

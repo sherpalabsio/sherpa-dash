@@ -2,8 +2,8 @@ defmodule SherpaDashWeb.PageController do
   use SherpaDashWeb, :controller
 
   def home(conn, _params) do
-    # The home page is often custom made,
-    # so skip the default app layout.
-    render(conn, :home, layout: false)
+    result = SherpaDash.Hibob.Holidays.min_max_days_remaining(2025)
+
+    render(conn, :home, layout: false, result: result)
   end
 end
