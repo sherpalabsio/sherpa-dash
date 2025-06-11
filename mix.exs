@@ -58,7 +58,8 @@ defmodule SherpaDash.MixProject do
       {:dns_cluster, "~> 0.1.1"},
       {:bandit, "~> 1.5"},
       {:tesla, "~> 1.11"},
-      {:mock, "~> 0.3.0", only: :test}
+      {:mock, "~> 0.3.0", only: :test},
+      {:ueberauth_google, "~> 0.10"}
     ]
   end
 

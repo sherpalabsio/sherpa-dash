@@ -8,6 +8,9 @@ export HIBOB_EMPLOYEE_ID=
 export MIN_DAYS_I_WORK=
 export MAX_DAYS_I_WORK=
 
+export GOOGLE_OAUTH_CLIENT_ID=
+export GOOGLE_OAUTH_CLIENT_SECRET=
+
 mid_dev_hook() {
   __open_localhost
 }

@@ -14,6 +14,13 @@ defmodule SherpaDashWeb.Router do
     plug :accepts, ["json"]
   end
 
+  scope "/auth", SherpaDashWeb do
+    pipe_through :browser
+
+    get "/:provider", AuthController, :request
+    get "/:provider/callback", AuthController, :callback
+  end
+
   scope "/", SherpaDashWeb do
     pipe_through :browser
 
