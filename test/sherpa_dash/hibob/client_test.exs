@@ -1,6 +1,11 @@
 defmodule SherpaDash.Hibob.ClientTest do
   use ExUnit.Case, async: true
 
+  setup do
+    System.put_env("HIBOB_EMPLOYEE_ID", "HIBOB_EMPLOYEE_ID")
+    :ok
+  end
+
   describe "when the status code is not 2xx" do
     test "raises SherpaDash.Hibob.RequestError when status code is not 2xx" do
       Tesla.Mock.mock(fn

@@ -1,14 +1,11 @@
 defmodule SherpaDash.Hibob.Client do
   use Tesla
 
-  @hibob_token System.get_env("HIBOB_TOKEN")
-  @employee_id System.get_env("HIBOB_EMPLOYEE_ID")
-
   plug Tesla.Middleware.BaseUrl, "https://api.hibob.com/v1"
 
   plug Tesla.Middleware.Headers, [
     {"accept", "application/json"},
-    {"Authorization", "Basic " <> @hibob_token}
+    {"Authorization", "Basic " <> System.get_env("HIBOB_TOKEN")}
   ]
 
   plug Tesla.Middleware.JSON
@@ -36,7 +33,7 @@ defmodule SherpaDash.Hibob.Client do
 
     response.body["outs"]
     |> Enum.filter(fn out ->
-      out["employeeId"] == @employee_id &&
+      out["employeeId"] == System.get_env("HIBOB_EMPLOYEE_ID") &&
         out["policyTypeDisplayName"] == "Absence"
     end)
     |> Enum.reduce(0, fn out, acc ->
