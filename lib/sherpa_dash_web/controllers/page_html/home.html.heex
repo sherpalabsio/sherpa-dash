@@ -1,8 +1,26 @@
 <.flash_group flash={@flash} />
-<%= case @result do %>
-  <% [min_days, max_days] -> %>
-    <p>Minimum days remaining: {min_days}</p>
-    <p>Maximum days remaining: {max_days}</p>
-  <% _ -> %>
-    <p>No data available</p>
-<% end %>
+<% %{min: min, max: max} = @data %>
+<table>
+  <thead>
+    <tr>
+      <th></th>
+      <th>Taken</th>
+      <th>Remaining</th>
+      <th>Total</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Min</td>
+      <td>{min.taken}</td>
+      <td>{min.remaining}</td>
+      <td>{min.total}</td>
+    </tr>
+    <tr>
+      <td>Max</td>
+      <td>{max.taken}</td>
+      <td>{max.remaining}</td>
+      <td>{max.total}</td>
+    </tr>
+  </tbody>
+</table>

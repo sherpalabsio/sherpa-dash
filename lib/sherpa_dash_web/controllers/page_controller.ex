@@ -2,8 +2,8 @@ defmodule SherpaDashWeb.PageController do
   use SherpaDashWeb, :controller
 
   def home(conn, _params) do
-    result = SherpaDash.Hibob.Holidays.min_max_days_remaining(2025)
+    data = SherpaDash.Hibob.Holidays.data_for(2025)
 
-    render(conn, :home, layout: false, result: result)
+    render(conn, :home, layout: false, data: data)
   end
 end
