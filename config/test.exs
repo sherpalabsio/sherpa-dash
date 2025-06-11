@@ -20,6 +20,8 @@ config :sherpa_dash, SherpaDashWeb.Endpoint,
   secret_key_base: "KpCT5qoxffFz9CMoi+aynNaF3qup81elBJW1RCtjx2raDVaVE3/EighMdvmlfnxN",
   server: false
 
+config :tesla, adapter: Tesla.Mock
+
 # Print only warnings and errors during test
 config :logger, level: :warning
 

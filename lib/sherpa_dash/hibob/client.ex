@@ -30,6 +30,10 @@ defmodule SherpaDash.Hibob.Client do
         ]
       )
 
+    unless response.status in 200..299 do
+      raise SherpaDash.Hibob.RequestError, status: response.status
+    end
+
     response.body["outs"]
     |> Enum.filter(fn out ->
       out["employeeId"] == @employee_id &&
