@@ -40,17 +40,18 @@ defmodule SherpaDash.Hibob.Client do
         out["policyTypeDisplayName"] == "Absence"
     end)
     |> Enum.reduce(0, fn out, acc ->
-      acc + work_days_between(out["startDate"], out["endDate"])
+      acc + work_days_between(year, out["startDate"], out["endDate"])
     end)
   end
 
-  def work_days_between(start_date, end_date) do
+  def work_days_between(year, start_date, end_date) do
     {:ok, start_date} = Date.from_iso8601(start_date)
     {:ok, end_date} = Date.from_iso8601(end_date)
 
     Date.range(start_date, end_date)
     |> Enum.count(fn date ->
-      Date.day_of_week(date) in 1..5
+      date.year == year &&
+        Date.day_of_week(date) in 1..5
     end)
   end
 end

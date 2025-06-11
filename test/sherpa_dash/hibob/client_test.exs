@@ -14,7 +14,7 @@ defmodule SherpaDash.Hibob.ClientTest do
     end
   end
 
-  describe "when the status code is 2xx" do
+  describe "when the date slot overlaps with the previous year" do
     test "returns the correct number of taken days" do
       Tesla.Mock.mock(fn
         %{method: :get} ->
@@ -24,7 +24,7 @@ defmodule SherpaDash.Hibob.ClientTest do
             body: ~s|{
               "outs": [
                 {
-                  "startDate": "2024-01-01",
+                  "startDate": "2023-12-25",
                   "endDate":   "2024-01-07",
                   "policyTypeDisplayName": "Absence",
                   "employeeId": "#{System.get_env("HIBOB_EMPLOYEE_ID")}",
@@ -39,6 +39,34 @@ defmodule SherpaDash.Hibob.ClientTest do
 
       time_off = SherpaDash.Hibob.Client.number_of_taken_days(2024)
       assert time_off == 5
+    end
+  end
+
+  describe "when the date slot overlaps with the next year" do
+    test "returns the correct number of taken days" do
+      Tesla.Mock.mock(fn
+        %{method: :get} ->
+          %Tesla.Env{
+            status: 200,
+            headers: [{"content-type", "application/json"}],
+            body: ~s|{
+              "outs": [
+                {
+                  "startDate": "2024-12-30",
+                  "endDate":   "2025-01-05",
+                  "policyTypeDisplayName": "Absence",
+                  "employeeId": "#{System.get_env("HIBOB_EMPLOYEE_ID")}",
+                  "visibility": "Public",
+                  "requestRangeType": "days",
+                  "endDatePortion": "afternoon"
+                }
+              ]
+            }|
+          }
+      end)
+
+      time_off = SherpaDash.Hibob.Client.number_of_taken_days(2024)
+      assert time_off == 2
     end
   end
 end
