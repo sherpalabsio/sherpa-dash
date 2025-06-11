@@ -8,7 +8,7 @@ defmodule SherpaDash.Hibob.Client do
 
   plug Tesla.Middleware.Headers, [
     {"accept", "application/json"},
-    {"Authorization", "" <> @hibob_token}
+    {"Authorization", "Basic " <> @hibob_token}
   ]
 
   plug Tesla.Middleware.JSON
